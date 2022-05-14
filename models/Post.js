@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const User = require('./User')
-
 
 const postSchema = new Schema({
     body: {
@@ -72,11 +70,6 @@ postSchema.post('save', function(doc, next) {
         next();
     });
 });
-
-// postSchema.post('save', async (doc, next) => {
-//     doc.populate(populationFields).execPopulate()
-//     next();
-// })
 
 function populateFields() {
     this.populate(populationFields)
