@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const privatePaths = require('mongoose-private-paths')
-const Post = require('./Post')
 
 
 const Schema = mongoose.Schema
