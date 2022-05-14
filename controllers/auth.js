@@ -16,16 +16,16 @@ router.post('/register', async (ctx) => {
         ctx.throw(400, 'Email already exists')
     }
 
+    if (password.length < 8) {
+        ctx.throw(403, 'Password too short minimum length is 8 characters');
+    }
+
     // if user not exists then create user's password hash(with salt), user's email and user's name 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     await new User({ email, name, password: hash }).save();
     ctx.status = 201;
 })
-
-router.get('/register',async (ctx) => {
-
-} )
 
 
 router.post('/login', async (ctx) => {
@@ -58,9 +58,6 @@ router.post('/login', async (ctx) => {
     }
 })
 
-router.get('/login',async (ctx) => {
-    
-} )
 
 
 module.exports = router.routes();
