@@ -4,9 +4,10 @@
   "description": "",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "test": "ava"
   },
-  "author": "",
+  "author": "Danya",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -20,18 +21,20 @@
     "keygrip": "^1.1.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
-    "koa-html-render": "^1.0.3",
     "koa-json": "^2.0.2",
+    "koa-jwt": "^4.0.3",
     "koa-passport": "^4.1.4",
     "koa-router": "^10.1.1",
-    "koa-static": "^5.0.0",
-    "koa-views": "^8.0.0",
-    "koa-views-render": "^0.0.1",
     "mongodb": "^4.5.0",
     "mongoose": "^6.3.3",
     "mongoose-private-paths": "^0.7.0",
     "nodemon": "^2.0.15",
     "passport-jwt": "^4.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "ava": "^4.2.0",
+    "supertest-koa-agent": "^0.3.2"
   }
 }
