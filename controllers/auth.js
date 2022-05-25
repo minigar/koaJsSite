@@ -1,6 +1,7 @@
 const Router = require('koa-router')
 const bcrypt = require('bcryptjs') // library for generate and compare password hash 
 const jwt = require('jsonwebtoken') //library for authentication 
+const { v4: uuidv4 } = require('uuid');
 
 const User = require('../models/User')
 const config = require('../lib/config')
@@ -33,14 +34,14 @@ router.post('/login', async (ctx) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        ctx.throw(400, 'Email not found');
+        ctx.throw(403, 'Email not found');
     }
 
     //compare password hash and user's password
-    const isMatch = await bcrypt.compare(password, user.password);
+    const comparePassword = await bcrypt.compare(password, user.password);
 
     // if password equal password witch user writed, then create token
-    if (isMatch) {
+    if (comparePassword) {
         const payload = {
             id: user.id,
             name: user.name,
@@ -49,9 +50,11 @@ router.post('/login', async (ctx) => {
 
         // create token
         const token = jwt.sign(payload, config.secret, { expiresIn: 3600 * 24 });
+        const refreshToken = uuidv4();
 
         //  for api
-        ctx.body = { token: `Bearer ${token}` };
+        ctx.body = { token: `Bearer ${token}`,
+                    refreshToken};
     }
     else {
         ctx.throw(400, 'Password incorrect');
