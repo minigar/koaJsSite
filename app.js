@@ -1,7 +1,7 @@
 require("dotenv").config()
 
 const Koa = require('koa');
-const jwtMiddleware = require("koa-jwt");
+const bodyParser = require('body-parser');
 
 const config = require('./lib/config');
 const handlers = require("./handlers");
@@ -12,12 +12,13 @@ const app = new Koa();
 
 handlers.forEach((h) => {app.use(h)});
 
-// Middleware below this line is only reached if JWT token is valid
 
 //Use the routes defined using the router
 app.use(controllers.routes());
 // allowed mehtods for controllers
 app.use(controllers.allowedMethods());
+
+app.use(bodyParser.json());
 
 
 
@@ -25,6 +26,5 @@ app.use(controllers.allowedMethods());
 mongooseConfig();
 
 app.listen(config.port, () => {console.log(`server has been started on port ${config.port}`)});
-
 
 module.exports = app;
