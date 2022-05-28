@@ -1,8 +1,18 @@
 const  Router = require('koa-router');
+const jwtMiddleware = require("koa-jwt");
+const { authLine } = require('./auth');
 
+const config = require('../lib/config');
 const User = require("../models/User");
 
-const router = new Router().prefix('/users');
+const router = new Router();
+
+
+router.use(jwtMiddleware({
+    secret: config.jwt.secret
+}));
+
+router.prefix('/users');
 
 
 router.get('/:_id', async (ctx) => {
