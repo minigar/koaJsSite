@@ -1,10 +1,16 @@
 const Router = require('koa-router');
 const passport = require('koa-passport');
-
+const jwtMiddleware = require("koa-jwt");
+const config = require('../lib/config');
 const Subscription = require('../models/Subscription');
 
-const router = new Router().prefix('/subscriptions');
+const router = new Router();
 
+router.use(jwtMiddleware({
+    secret: config.jwt.secret
+}));
+
+router.prefix('/subscriptions');
 
 router.post('/', passport.authenticate('jwt', { session: false }), async(ctx) => {
     const { profile } = ctx.request.body;
