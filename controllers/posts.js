@@ -1,9 +1,17 @@
 const Router = require("koa-router");
 const passport = require("koa-passport");
+const jwtMiddleware = require("koa-jwt");
+const config = require("../lib/config");
 
 const Post = require("../models/Post");
 
-const router = new Router().prefix("/posts")
+const router = new Router()
+// Middleware below this line is only reached if JWT token is valid
+router.use(jwtMiddleware({
+    secret: config.jwt.secret
+}));
+
+router.prefix("/posts")
 
 router.post("/", passport.authenticate('jwt', { session: false }), async(ctx) => {
     const { body } = ctx.request.body;
