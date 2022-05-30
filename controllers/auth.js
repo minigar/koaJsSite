@@ -105,9 +105,8 @@ router.post('/refresh', async (ctx) => {
             return updateTokens(token.userId)
         })
         // write 2 new tokens in body 
-        .then((tokens) => {
-            ctx.body = tokens
-        })
+        // #FIXME WHY RETURNS not found???
+        .then(tokens => ctx.body = tokens)
         .then(tokens => console.log(tokens))
         .catch(err => console.log(err))
 })
