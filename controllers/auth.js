@@ -55,7 +55,7 @@ router.post('/login', async (ctx) => {
     //compare password hash and user's password
     const comparePassword = await bcrypt.compare(password, user.password);
 
-    // if password equal password witch user writed, then create tokens
+    // if password equal password witch user has wrote, then create tokens
     if (comparePassword) {
         // create access token and refresh token and writes in body
         updateTokens(user._id)
@@ -105,7 +105,9 @@ router.post('/refresh', async (ctx) => {
             return updateTokens(token.userId)
         })
         // write 2 new tokens in body 
-        .then(tokens => ctx.body = tokens)
+        .then((tokens) => {
+            ctx.body = tokens
+        })
         .then(tokens => console.log(tokens))
         .catch(err => console.log(err))
 })

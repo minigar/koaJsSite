@@ -15,7 +15,7 @@ handlers.forEach((h) => {app.use(h)});
 
 //Use the routes defined using the router
 app.use(controllers.routes());
-// allowed mehtods for controllers
+// allowed methods for controllers
 app.use(controllers.allowedMethods());
 
 app.use(bodyParser.json());
