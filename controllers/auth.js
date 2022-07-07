@@ -11,7 +11,7 @@ const config = require('../lib/config');
 const router = new Router().prefix('/auth')
 
 
-const updateTokens = (userId) => {
+const updateTokens = async (userId) => {
     const accessToken = jwtMethods.generateAccessToken(userId);
     const refreshToken = jwtMethods.generateRefreshToken();
 
@@ -58,8 +58,9 @@ router.post('/login', async (ctx) => {
     // if password equal password witch user has wrote, then create tokens
     if (comparePassword) {
         // create access token and refresh token and writes in body
-        updateTokens(user._id)
+        await updateTokens(user._id)
             .then(tokens => ctx.body = tokens)
+        
     }
 
     else {
